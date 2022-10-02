@@ -1,0 +1,1398 @@
+<?php include_once './config.inc.php';
+if(isset($_GET['object'])&& $_GET['object']!=='' &&  isset($_GET['id'])&& is_numeric($_GET['id'])){
+
+  $commande = $db->get_row("SELECT * FROM ordered_hx WHERE  id='".$_GET['id']."'");
+  $client = $db->get_row("SELECT * FROM clients WHERE  id='".$commande['id_client']."'");
+  $produits = $db->get_rows("SELECT produit_commande.* FROM produit_commande WHERE id_commande = ".$commande['id']);
+
+  
+
+  foreach ($produits as $produit) { 
+    $s_product= $db->get_row("SELECT sous_products_table.* FROM sous_products_table WHERE id=".$produit['id_sub_produit']);
+    $table_pack .= '<tr>';
+    $table_pack .= '<td>'.$s_product["code_article"].'</td>';
+    $table_pack .= '<td>'.$s_product["designation"].'</td>';
+    $table_pack .= '<td>'.$produit["quantite"].'</td>';
+    $table_pack .= '<td>'.$s_product["prix_final"].'</td>';
+    $table_pack .= '<td>'.$s_product["unite"].'</td>';
+    $table_pack .= '</tr>';
+     /*** Mise à jour du stock ***/
+    $new_stock = $s_product["quantite"] - $produit["quantite"];
+    $db->update('sous_products_table',array('quantite'=>$new_stock),$s_product['id']);
+
+
+  }
+
+
+  //$toto = explode("€", $commande['total']);
+  //$total = $toto[0] + $commande['counts_liv'];
+
+  $today = date("Y-m-d");
+  if(!$db->update('ordered_hx',array('state'=>'Expédié', 'date_traitement'=>$today),$commande['id'])){
+    echo 'error';
+  }else{
+    echo 'success commande';
+
+    $livraison =   $commande['counts_liv'];
+    $toto = explode("€", $commande['total']);
+    $total = $toto[0] + $livraison;
+
+if($commande['Version']==="En"){
+ send_mail_to_client_En( $client['email'], $client['firstName'], $client['lastName'], $commande['ref_commande'], $table_pack, $commande['total'], $livraison, $commande['total_final'], $total, $client['address'], $client['country'], $client['cplocalite'], $client['phone']);
+}else{
+   send_mail_to_client( $client['email'], $client['firstName'], $client['lastName'], $commande['ref_commande'], $table_pack, $commande['total'], $livraison, $commande['total_final'], $total, $client['address'], $client['country'], $client['cplocalite'], $client['phone']);
+}
+   
+
+  }
+
+  $nb_produits = 0;
+   $table_stock = '';
+  foreach ($produits as $produit) { 
+    $sous_products_table = $db->get_row("SELECT sous_products_table.* FROM sous_products_table WHERE id=".$produit['id_sub_produit']);
+
+    if ($sous_products_table["quantite"] == 0) {
+      $nb_produits ++;
+      $table_stock .= '<tr>';
+      $table_stock .= '<td>'.$s_product["code_article"].'</td>';
+      $table_stock .= '<td>'.$s_product["designation"].'</td>';
+      $table_stock .= '<td>'.$s_product["quantite"].'</td>';
+      $table_stock .= '<td>'.$s_product["stock_min"].'</td>';
+      $table_stock .= '</tr>';
+
+      $message = 'produits en rupture de stock';
+       send_mail_to_admin($message, $table_stock, $nb_produits);
+    }else{
+      if($sous_products_table["quantite"] <= $sous_products_table["stock_min"]){
+          $nb_produits ++;
+          $table_stock .= '<tr>';
+          $table_stock .= '<td>'.$s_product["code_article"].'</td>';
+          $table_stock .= '<td>'.$s_product["designation"].'</td>';
+          $table_stock .= '<td>'.$s_product["quantite"].'</td>';
+          $table_stock .= '<td>'.$s_product["stock_min"].'</td>';
+          $table_stock .= '</tr>';
+          $message = 'produits en stock minimum';
+          send_mail_to_admin($message, $table_stock, $nb_produits);
+      }
+    }
+   
+  }
+
+
+}
+
+
+function send_mail_to_client($email, $nom, $prenom, $ref_commande, $table_pack, $sous_total, $livraison, $total, $adresse, $pays, $code_postal, $phone){
+
+          ini_set( 'display_errors', 1 );
+            error_reporting( E_ALL );
+
+            $msg2 = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+          <meta name="format-detection" content="telephone=no" /> <!-- disable auto telephone linking in iOS -->
+          <title>Respmail is a response HTML email designed to work on all major email platforms and smartphones</title>
+          <style type="text/css">
+            html { background-color:#E1E1E1; margin:0; padding:0; }
+            body, #bodyTable, #bodyCell, #bodyCell{height:100% !important; margin:0; padding:0; width:100% !important;font-family:Helvetica, Arial, "Lucida Grande", sans-serif;}
+            table{border-collapse:collapse;}
+            table[id=bodyTable] {width:100%!important;margin:auto;max-width:500px!important;color:#7A7A7A;font-weight:normal;}
+            img, a img{border:0; outline:none; text-decoration:none;height:auto; line-height:100%;}
+            a {text-decoration:none !important;border-bottom: 1px solid;}
+            h1, h2, h3, h4, h5, h6{color:#5F5F5F; font-weight:normal; font-family:Helvetica; font-size:20px; line-height:125%; text-align:Left; letter-spacing:normal;margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;padding-top:0;padding-bottom:0;padding-left:0;padding-right:0;}
+            /* CLIENT-SPECIFIC STYLES */
+            .ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail/Outlook.com to display emails at full width. */
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div{line-height:100%;} /* Force Hotmail/Outlook.com to display line heights normally. */
+            table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} /* Remove spacing between tables in Outlook 2007 and up. */
+            #outlook a{padding:0;} /* Force Outlook 2007 and up to provide a "view in browser" message. */
+            img{-ms-interpolation-mode: bicubic;display:block;outline:none; text-decoration:none;} /* Force IE to smoothly render resized images. */
+            body, table, td, p, a, li, blockquote{-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; font-weight:normal!important;} /* Prevent Windows- and Webkit-based mobile platforms from changing declared text sizes. */
+            .ExternalClass td[class="ecxflexibleContainerBox"] h3 {padding-top: 10px !important;} /* Force hotmail to push 2-grid sub headers down */
+            /* ========== Page Styles ========== */
+            h1{display:block;font-size:26px;font-style:normal;font-weight:normal;line-height:100%;}
+            h2{display:block;font-size:20px;font-style:normal;font-weight:normal;line-height:120%;}
+            h3{display:block;font-size:17px;font-style:normal;font-weight:normal;line-height:110%;}
+            h4{display:block;font-size:18px;font-style:italic;font-weight:normal;line-height:100%;}
+            .flexibleImage{height:auto;}
+            .linkRemoveBorder{border-bottom:0 !important;}
+            table[class=flexibleContainerCellDivider] {padding-bottom:0 !important;padding-top:0 !important;}
+
+            body, #bodyTable{background-color:#E1E1E1;}
+            #emailHeader{background-color:#E1E1E1;}
+            #emailBody{background-color:#FFFFFF;}
+            #emailFooter{background-color:#E1E1E1;}
+            .nestedContainer{background-color:#F8F8F8; border:1px solid #CCCCCC;}
+            .emailButton{background-color:#205478; border-collapse:separate;}
+            .buttonContent{color:#FFFFFF; font-family:Helvetica; font-size:18px; font-weight:bold; line-height:100%; padding:15px; text-align:center;}
+            .buttonContent a{color:#FFFFFF; display:block; text-decoration:none!important; border:0!important;}
+            .emailCalendar{background-color:#FFFFFF; border:1px solid #CCCCCC;}
+            .emailCalendarMonth{background-color:#205478; color:#FFFFFF; font-family:Helvetica, Arial, sans-serif; font-size:16px; font-weight:bold; padding-top:10px; padding-bottom:10px; text-align:center;}
+            .emailCalendarDay{color:#205478; font-family:Helvetica, Arial, sans-serif; font-size:60px; font-weight:bold; line-height:100%; padding-top:20px; padding-bottom:20px; text-align:center;}
+            .imageContentText {margin-top: 10px;line-height:0;}
+            .imageContentText a {line-height:0;}
+            #invisibleIntroduction {display:none !important;} /* Removing the introduction text from the view */
+            span[class=ios-color-hack] a {color:#275100!important;text-decoration:none!important;} /* Remove all link colors in IOS (below are duplicates based on the color preference) */
+            span[class=ios-color-hack2] a {color:#205478!important;text-decoration:none!important;}
+            span[class=ios-color-hack3] a {color:#8B8B8B!important;text-decoration:none!important;}
+            .a[href^="tel"], a[href^="sms"] {text-decoration:none!important;color:#606060!important;pointer-events:none!important;cursor:default!important;}
+            .mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {text-decoration:none!important;color:#606060!important;pointer-events:auto!important;cursor:default!important;}
+            /* MOBILE STYLES */
+            @media only screen and (max-width: 480px){
+              /*////// CLIENT-SPECIFIC STYLES //////*/
+              body{width:100% !important; min-width:100% !important;} /* Force iOS Mail to render the email at full width. */
+              table[id="emailHeader"],
+              table[id="emailBody"],
+              table[id="emailFooter"],
+              table[class="flexibleContainer"],
+              td[class="flexibleContainerCell"] {width:100% !important;}
+              td[class="flexibleContainerBox"], td[class="flexibleContainerBox"] table {display: block;width: 100%;text-align: left;}
+              td[class="imageContent"] img {height:auto !important; width:100% !important; max-width:100% !important; }
+              img[class="flexibleImage"]{height:auto !important; width:100% !important;max-width:100% !important;}
+              img[class="flexibleImageSmall"]{height:auto !important; width:auto !important;}
+              table[class="flexibleContainerBoxNext"]{padding-top: 10px !important;}
+              table[class="emailButton"]{width:100% !important;}
+              td[class="buttonContent"]{padding:0 !important;}
+              td[class="buttonContent"] a{padding:15px !important;}
+            }
+          </style>
+        </head>
+        <body bgcolor="#E1E1E1" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+          <center style="background-color:#E1E1E1;">
+            <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="table-layout: fixed;max-width:100% !important;width: 100% !important;min-width: 100% !important;">
+              <tr>
+                <td align="center" valign="top" id="bodyCell">
+                  <table bgcolor="#E1E1E1" border="0" cellpadding="0" cellspacing="0" width="500" id="emailHeader">
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="10" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td valign="top" width="500" class="flexibleContainerCell">
+                                    <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td align="left" valign="middle" id="invisibleIntroduction" class="flexibleContainerBox" style="display:none !important; mso-hide:all;">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:100%;">
+                                            <tr>
+                                              <td align="left" class="textContent"></td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                        <td align="right" valign="middle" class="flexibleContainerBox">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:100%;">
+                                            <tr>
+                                              <td align="left" class="textContent"></td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <table bgcolor="#FFFFFF"  border="0" cellpadding="0" cellspacing="0" width="600" id="emailBody">
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="color:#FFFFFF;" bgcolor="#e30613">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="4" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td align="center" valign="top" class="textContent"></td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top" style="border-bottom: 1px solid #e1e1e1;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="20" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td align="center" valign="top">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                              <td valign="top" class="textContent">
+                                                <a href="https://hydrex-international.com"><img src="https://hydrex-international.com/assets/img/icon-Hydrex-150px.png" style="margin: auto;"></a>
+                                              </td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="30" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td align="center" valign="top">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                              <td valign="top" class="textContent">
+                                              <h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:16px;text-align:left;">Bonjour '.$nom.' '.$prenom.',</h3>
+                                              <div style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;">Votre commande <b> n°'.$ref_commande.'</b>, a été expédiée:</div>
+                                            </td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                <td align="center" valign="top" width="500" class="flexibleContainerCell">
+
+                                <table cellspacing="0" cellpadding="6" border="1" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;width:100%;font-family:Helvetica,Roboto,Arial,sans-serif">
+                                  <thead><tr>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Code article</th>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Désignation</th>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Quantité</th>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Prix</th>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Unité</th>
+                                  </tr></thead>
+                                  <tbody>'.$table_pack.' </tbody>
+                                    <tfoot>
+                                      
+                                        <tr>
+                                      <th scope="row" colspan="2" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left;border-top-width:4px">Total&nbsp;HT&nbsp;:</th> 
+                                      <td colspan="3" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left;border-top-width:4px">
+                                          <span>'.number_format(($sous_total/1.2)-$livraison,2).'</span></td>
+                                      </tr>
+
+
+
+                                      <tr>
+                                      <th scope="row" colspan="2" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Coûts de livraison HT:&nbsp;:</th>
+                                      <td colspan="3" style="color:#636363;vertical-align:middle;padding:12px;text-align:left;">
+                                      <span>'.$livraison.'<span>€</span></span>&nbsp;<small>via Frais de livraison</small>
+                                      </td>
+                                      </tr>
+
+
+                                      <tr>
+                                      <th scope="row" colspan="2" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">TVA&nbsp;:</th>
+                                      <td colspan="3" style="color:#636363;vertical-align:middle;padding:12px;text-align:left;">
+                                      <span>'.number_format(($sous_total/1.2)*0.2,2).'<span>€</span></span>
+                                      </td>
+                                      </tr>
+
+
+                                 
+
+                                  
+                                    <tr>
+                                      <th scope="row" colspan="2" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left;border-top-width:4px">Total TTC&nbsp;:</th> 
+                                      <td colspan="3" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left;border-top-width:4px">
+                                          <span>'.number_format($sous_total,2).'</span></td>
+                                      </tr>
+                                    </tfoot>
+                                    </table>
+                                </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="30" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td valign="top" width="500" class="flexibleContainerCell">
+                                    <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                      <tr>
+                                              <td align="left" class="textContent">
+                                                <h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;">Adresse de livraison</h3>
+                                                 
+                                                 <address style="padding:12px;color:#636363;border:1px solid #e5e5e5">
+                                                '.$nom.' '.$adresse.'<br>'.$adresse.'<br>'.$pays.'<br>'.$code_postal.'<br>
+                                                  <a href="tel:'.$phone.'" style="color:#3fb6e9;font-weight:normal;text-decoration:underline" target="_blank">'.$phone.'</a><br><a href="mailto:'.$email.'" target="_blank">'.$email.'</a>              
+                                                </address>
+
+                                              </td>
+                                            </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="10" cellspacing="0" width="500" class="flexibleContainer">
+                              <tr><td><hr style="border:2px solid #e30613"></td></tr>
+                                <tr>
+                                  <td valign="top" width="500" class="flexibleContainerCell">
+                                    <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td width="100%" align="center" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;color:#7b7b7f;text-align:center;padding:0 0 0 0">
+                                          Merci pour votre confiance, nous restons à votre écoute pour tout complément d’informations.<br><br>
+                                          <span style="font-weight:bold;color:#e30613">À très bientôt sur Hydrex International !</span><br>
+                                          Votre équipe <a href="https://hydrex-international.com/" rel="noreferrer" target="_blank"> Hydrex International</a>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                    <table border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr style="height: 30px"><td align="center" valign="top"> </td> </tr></tbody></table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                   
+                  </table>
+
+                  <table border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr style="height: 30px"><td align="center" valign="top"> </td> </tr></tbody></table>
+
+                  <table border="0" cellpadding="0" cellspacing="0" width="600" bgcolor="#e30613" style="color: #fff">
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="20" cellspacing="0" width="500" class="flexibleContainer">
+                          <tr>
+                            <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                              <table border="0" cellpadding="0" cellspacing="0" align="center">
+                                <tbody>
+                                  <tr>
+                                    <span> 37, Rue Jeannette Ponteille, 69550 Amplepuis - France</span>
+                                  </tr>
+                                  <tr>
+                                    <td valign="top">
+                                      <span>Email : <a href="mailto:hydrex@hydrex.fr" target="_blank" style="color: #fff">hydrex@hydrex.fr</a></span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td valign="top">
+                                      <span style="font-weight:normal">Tél :+33 04 74 89 30 88</span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td valign="top">
+                                      <span style="font-weight:normal">Fax :+33 04 74 89 30 65 </span>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="20" cellspacing="0" width="500" class="flexibleContainer">
+                          <tr>
+                           <td></td> <td></td>
+                            <td>
+                              <a href="https://www.facebook.com/hydrex.international" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/facebook.png"></a>
+                            </td>
+                            <td>
+                              <a href="https://www.linkedin.com/company/hydrex-international/?viewAsMember=true" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/linkedin.png"></a></td>
+                            <td>
+                              <a href="https://twitter.com/hydrex" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/twitter.png"><i class="fa fa-twitter"></i></a>
+                            </td>
+                            <td>
+                              <a href="https://www.instagram.com/hydrex.international/" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/instagram.png"><i class="fa fa-instagram"></i></a>
+                            </td>
+                            <td>
+                              <a href="https://www.youtube.com/channel/UC0-RajpSF6kyUUnkoANcH2Q" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/youtube.png"><i class="fa fa-youtube-play"></i></a>
+                            </td>
+                            <td></td> <td></td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <table bgcolor="#E1E1E1" border="0" cellpadding="0" cellspacing="0" width="500" id="emailFooter">
+                  <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="30" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td valign="top" bgcolor="#E1E1E1">
+
+                                          <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
+                                            <div>Attention ! Ne répondez pas directement à cet email. Pour des raisons techniques, nous ne recevons pas les demandes émises directement en réponse à nos emails.</div>
+                                          </div>
+
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="30" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td valign="top" bgcolor="#E1E1E1">
+
+                                          <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
+                                            <div>Copyright &#169; 2021 <a href="https://hydrex-international.com" style="color: #676767;text-decoration: none;">contact@hydrex.fr</a>. Tous les droits sont réservés.</div>
+                                          </div>
+
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </center>
+        </body>
+      </html>';
+
+
+       $subject = "Votre commande est en route -  Hydrex International";
+
+        $from = "maildetestmb@gmail.com";
+        $headers  = 'MIME-Version: 1.0' . "\n"; 
+        $headers .= 'From: Hydrex International <'.$from.'>' . "\n"; 
+        $headers .= 'Content-type: text/html; charset=utf-8' ."\n";
+        $headers .='Content-Transfer-Encoding: 8bit'; 
+
+        mail($email,$subject,$msg2, $headers);
+
+      }
+
+
+
+
+//Sent Mail English Version
+function send_mail_to_client_En($email, $nom, $prenom, $ref_commande, $table_pack, $sous_total, $livraison, $total, $adresse, $pays, $code_postal, $phone){
+
+          ini_set( 'display_errors', 1 );
+            error_reporting( E_ALL );
+
+            $msg2 = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+          <meta name="format-detection" content="telephone=no" /> <!-- disable auto telephone linking in iOS -->
+          <title>Respmail is a response HTML email designed to work on all major email platforms and smartphones</title>
+          <style type="text/css">
+            html { background-color:#E1E1E1; margin:0; padding:0; }
+            body, #bodyTable, #bodyCell, #bodyCell{height:100% !important; margin:0; padding:0; width:100% !important;font-family:Helvetica, Arial, "Lucida Grande", sans-serif;}
+            table{border-collapse:collapse;}
+            table[id=bodyTable] {width:100%!important;margin:auto;max-width:500px!important;color:#7A7A7A;font-weight:normal;}
+            img, a img{border:0; outline:none; text-decoration:none;height:auto; line-height:100%;}
+            a {text-decoration:none !important;border-bottom: 1px solid;}
+            h1, h2, h3, h4, h5, h6{color:#5F5F5F; font-weight:normal; font-family:Helvetica; font-size:20px; line-height:125%; text-align:Left; letter-spacing:normal;margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;padding-top:0;padding-bottom:0;padding-left:0;padding-right:0;}
+            /* CLIENT-SPECIFIC STYLES */
+            .ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail/Outlook.com to display emails at full width. */
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div{line-height:100%;} /* Force Hotmail/Outlook.com to display line heights normally. */
+            table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} /* Remove spacing between tables in Outlook 2007 and up. */
+            #outlook a{padding:0;} /* Force Outlook 2007 and up to provide a "view in browser" message. */
+            img{-ms-interpolation-mode: bicubic;display:block;outline:none; text-decoration:none;} /* Force IE to smoothly render resized images. */
+            body, table, td, p, a, li, blockquote{-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; font-weight:normal!important;} /* Prevent Windows- and Webkit-based mobile platforms from changing declared text sizes. */
+            .ExternalClass td[class="ecxflexibleContainerBox"] h3 {padding-top: 10px !important;} /* Force hotmail to push 2-grid sub headers down */
+            /* ========== Page Styles ========== */
+            h1{display:block;font-size:26px;font-style:normal;font-weight:normal;line-height:100%;}
+            h2{display:block;font-size:20px;font-style:normal;font-weight:normal;line-height:120%;}
+            h3{display:block;font-size:17px;font-style:normal;font-weight:normal;line-height:110%;}
+            h4{display:block;font-size:18px;font-style:italic;font-weight:normal;line-height:100%;}
+            .flexibleImage{height:auto;}
+            .linkRemoveBorder{border-bottom:0 !important;}
+            table[class=flexibleContainerCellDivider] {padding-bottom:0 !important;padding-top:0 !important;}
+
+            body, #bodyTable{background-color:#E1E1E1;}
+            #emailHeader{background-color:#E1E1E1;}
+            #emailBody{background-color:#FFFFFF;}
+            #emailFooter{background-color:#E1E1E1;}
+            .nestedContainer{background-color:#F8F8F8; border:1px solid #CCCCCC;}
+            .emailButton{background-color:#205478; border-collapse:separate;}
+            .buttonContent{color:#FFFFFF; font-family:Helvetica; font-size:18px; font-weight:bold; line-height:100%; padding:15px; text-align:center;}
+            .buttonContent a{color:#FFFFFF; display:block; text-decoration:none!important; border:0!important;}
+            .emailCalendar{background-color:#FFFFFF; border:1px solid #CCCCCC;}
+            .emailCalendarMonth{background-color:#205478; color:#FFFFFF; font-family:Helvetica, Arial, sans-serif; font-size:16px; font-weight:bold; padding-top:10px; padding-bottom:10px; text-align:center;}
+            .emailCalendarDay{color:#205478; font-family:Helvetica, Arial, sans-serif; font-size:60px; font-weight:bold; line-height:100%; padding-top:20px; padding-bottom:20px; text-align:center;}
+            .imageContentText {margin-top: 10px;line-height:0;}
+            .imageContentText a {line-height:0;}
+            #invisibleIntroduction {display:none !important;} /* Removing the introduction text from the view */
+            span[class=ios-color-hack] a {color:#275100!important;text-decoration:none!important;} /* Remove all link colors in IOS (below are duplicates based on the color preference) */
+            span[class=ios-color-hack2] a {color:#205478!important;text-decoration:none!important;}
+            span[class=ios-color-hack3] a {color:#8B8B8B!important;text-decoration:none!important;}
+            .a[href^="tel"], a[href^="sms"] {text-decoration:none!important;color:#606060!important;pointer-events:none!important;cursor:default!important;}
+            .mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {text-decoration:none!important;color:#606060!important;pointer-events:auto!important;cursor:default!important;}
+            /* MOBILE STYLES */
+            @media only screen and (max-width: 480px){
+              /*////// CLIENT-SPECIFIC STYLES //////*/
+              body{width:100% !important; min-width:100% !important;} /* Force iOS Mail to render the email at full width. */
+              table[id="emailHeader"],
+              table[id="emailBody"],
+              table[id="emailFooter"],
+              table[class="flexibleContainer"],
+              td[class="flexibleContainerCell"] {width:100% !important;}
+              td[class="flexibleContainerBox"], td[class="flexibleContainerBox"] table {display: block;width: 100%;text-align: left;}
+              td[class="imageContent"] img {height:auto !important; width:100% !important; max-width:100% !important; }
+              img[class="flexibleImage"]{height:auto !important; width:100% !important;max-width:100% !important;}
+              img[class="flexibleImageSmall"]{height:auto !important; width:auto !important;}
+              table[class="flexibleContainerBoxNext"]{padding-top: 10px !important;}
+              table[class="emailButton"]{width:100% !important;}
+              td[class="buttonContent"]{padding:0 !important;}
+              td[class="buttonContent"] a{padding:15px !important;}
+            }
+          </style>
+        </head>
+        <body bgcolor="#E1E1E1" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+          <center style="background-color:#E1E1E1;">
+            <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="table-layout: fixed;max-width:100% !important;width: 100% !important;min-width: 100% !important;">
+              <tr>
+                <td align="center" valign="top" id="bodyCell">
+                  <table bgcolor="#E1E1E1" border="0" cellpadding="0" cellspacing="0" width="500" id="emailHeader">
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="10" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td valign="top" width="500" class="flexibleContainerCell">
+                                    <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td align="left" valign="middle" id="invisibleIntroduction" class="flexibleContainerBox" style="display:none !important; mso-hide:all;">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:100%;">
+                                            <tr>
+                                              <td align="left" class="textContent"></td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                        <td align="right" valign="middle" class="flexibleContainerBox">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:100%;">
+                                            <tr>
+                                              <td align="left" class="textContent"></td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <table bgcolor="#FFFFFF"  border="0" cellpadding="0" cellspacing="0" width="600" id="emailBody">
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="color:#FFFFFF;" bgcolor="#e30613">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="4" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td align="center" valign="top" class="textContent"></td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top" style="border-bottom: 1px solid #e1e1e1;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="20" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td align="center" valign="top">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                              <td valign="top" class="textContent">
+                                                <a href="https://hydrex-international.com"><img src="https://hydrex-international.com/assets/img/icon-Hydrex-150px.png" style="margin: auto;"></a>
+                                              </td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="30" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td align="center" valign="top">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                              <td valign="top" class="textContent">
+                                              <h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:16px;text-align:left;">Hello '.$nom.' '.$prenom.', </h3>
+                                              <div style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;">Your order <b> n°'.$ref_commande.'</b>, has been shipped:</div>
+                                            </td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                <td align="center" valign="top" width="500" class="flexibleContainerCell">
+
+                                <table cellspacing="0" cellpadding="6" border="1" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;width:100%;font-family:Helvetica,Roboto,Arial,sans-serif">
+                                  <thead><tr>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Item code</th>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Designation</th>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Quantity</th>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Price</th>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Unit</th>
+                                  </tr></thead>
+                                  <tbody>'.$table_pack.' </tbody>
+                                    <tfoot>
+                                      <tr>
+                                      <th scope="row" colspan="2" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left;border-top-width:4px">Subtotal:&nbsp;:</th> 
+                                      <td colspan="3" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left;border-top-width:4px">
+                                          <span>'.$sous_total.'</span></td>
+                                      </tr>
+                                      <tr>
+                                      <th scope="row" colspan="2" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Shipping:&nbsp;:</th>
+                                      <td colspan="3" style="color:#636363;vertical-align:middle;padding:12px;text-align:left;">
+                                      <span>'.$livraison.'<span>€</span></span>&nbsp;<small>via Shipping costs</small>
+                                      </td>
+                                      </tr>
+                                      <tr>
+                                      <th scope="row" colspan="2" style="color:#636363;vertical-align:middle;padding:12px;text-align:left;">Total&nbsp;:</th>
+                                        <td colspan="3" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left"><span>'.$total.'<span>€</span></span></td>
+                                      </tr>
+                                    </tfoot>
+                                    </table>
+                                </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="30" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td valign="top" width="500" class="flexibleContainerCell">
+                                    <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                      <tr>
+                                              <td align="left" class="textContent">
+                                                <h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;">Delivery address</h3>
+                                                 
+                                                 <address style="padding:12px;color:#636363;border:1px solid #e5e5e5">
+                                                '.$nom.' '.$adresse.'<br>'.$adresse.'<br>'.$pays.'<br>'.$code_postal.'<br>
+                                                  <a href="tel:'.$phone.'" style="color:#3fb6e9;font-weight:normal;text-decoration:underline" target="_blank">'.$phone.'</a><br><a href="mailto:'.$email.'" target="_blank">'.$email.'</a>              
+                                                </address>
+
+                                              </td>
+                                            </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="10" cellspacing="0" width="500" class="flexibleContainer">
+                              <tr><td><hr style="border:2px solid #e30613"></td></tr>
+                                <tr>
+                                  <td valign="top" width="500" class="flexibleContainerCell">
+                                    <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td width="100%" align="center" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;color:#7b7b7f;text-align:center;padding:0 0 0 0">
+                                          Thank you for your trust, we remain at your disposal for any further information.<br><br>
+                                          <span style="font-weight:bold;color:#e30613">See you soon , Hydrex International !</span><br>
+                                         Your team <a href="https://hydrex-international.com/" rel="noreferrer" target="_blank"> Hydrex International</a>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                    <table border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr style="height: 30px"><td align="center" valign="top"> </td> </tr></tbody></table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                   
+                  </table>
+
+                  <table border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr style="height: 30px"><td align="center" valign="top"> </td> </tr></tbody></table>
+
+                  <table border="0" cellpadding="0" cellspacing="0" width="600" bgcolor="#e30613" style="color: #fff">
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="20" cellspacing="0" width="500" class="flexibleContainer">
+                          <tr>
+                            <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                              <table border="0" cellpadding="0" cellspacing="0" align="center">
+                                <tbody>
+                                  <tr>
+                                    <span> 37, Rue Jeannette Ponteille, 69550 Amplepuis - France</span>
+                                  </tr>
+                                  
+                                  <tr>
+                                    <td valign="top">
+                                      <span>Email : <a href="mailto:hydrex@hydrex.fr" target="_blank" style="color: #fff">hydrex@hydrex.fr</a></span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td valign="top">
+                                      <span style="font-weight:normal">Phone :+33 04 74 89 30 88</span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td valign="top">
+                                      <span style="font-weight:normal">Fax :+33 04 74 89 30 65 </span>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="20" cellspacing="0" width="500" class="flexibleContainer">
+                          <tr>
+                           <td></td> <td></td>
+                            <td>
+                              <a href="https://www.facebook.com/hydrex.international" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/facebook.png"></a>
+                            </td>
+                            <td>
+                              <a href="https://www.linkedin.com/company/hydrex-international/?viewAsMember=true" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/linkedin.png"></a></td>
+                            <td>
+                              <a href="https://twitter.com/hydrex" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/twitter.png"><i class="fa fa-twitter"></i></a>
+                            </td>
+                            <td>
+                              <a href="https://www.instagram.com/hydrex.international/" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/instagram.png"><i class="fa fa-instagram"></i></a>
+                            </td>
+                            <td>
+                              <a href="https://www.youtube.com/channel/UC0-RajpSF6kyUUnkoANcH2Q" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/youtube.png"><i class="fa fa-youtube-play"></i></a>
+                            </td>
+                            <td></td> <td></td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <table bgcolor="#E1E1E1" border="0" cellpadding="0" cellspacing="0" width="500" id="emailFooter">
+                  <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="30" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td valign="top" bgcolor="#E1E1E1">
+
+                                          <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
+                                            <div>Attention ! Ne répondez pas directement à cet email. Pour des raisons techniques, nous ne recevons pas les demandes émises directement en réponse à nos emails.</div>
+                                          </div>
+
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="30" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td valign="top" bgcolor="#E1E1E1">
+
+                                          <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
+                                            <div>Copyright &#169; 2021 <a href="https://hydrex-international.com" style="color: #676767;text-decoration: none;">contact@hydrex.fr</a>. Tous les droits sont réservés.</div>
+                                          </div>
+
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </center>
+        </body>
+      </html>';
+
+
+       $subject = "Your order is on its way -  Hydrex International";
+
+        $from = "maildetestmb@gmail.com";
+        $headers  = 'MIME-Version: 1.0' . "\n"; 
+        $headers .= 'From: Hydrex International <'.$from.'>' . "\n"; 
+        $headers .= 'Content-type: text/html; charset=utf-8' ."\n";
+        $headers .='Content-Transfer-Encoding: 8bit'; 
+
+        mail($email,$subject,$msg2, $headers);
+
+      }
+
+
+
+      /***************************  *************************/
+      /********************* Admin Notfi Stock *****************/
+
+      function send_mail_to_admin($message, $table_stock, $nb_produits){
+
+        ini_set( 'display_errors', 1 );
+            error_reporting( E_ALL );
+
+            $msg = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+          <meta name="format-detection" content="telephone=no" /> <!-- disable auto telephone linking in iOS -->
+          <title>Respmail is a response HTML email designed to work on all major email platforms and smartphones</title>
+          <style type="text/css">
+            html { background-color:#E1E1E1; margin:0; padding:0; }
+            body, #bodyTable, #bodyCell, #bodyCell{height:100% !important; margin:0; padding:0; width:100% !important;font-family:Helvetica, Arial, "Lucida Grande", sans-serif;}
+            table{border-collapse:collapse;}
+            table[id=bodyTable] {width:100%!important;margin:auto;max-width:500px!important;color:#7A7A7A;font-weight:normal;}
+            img, a img{border:0; outline:none; text-decoration:none;height:auto; line-height:100%;}
+            a {text-decoration:none !important;border-bottom: 1px solid;}
+            h1, h2, h3, h4, h5, h6{color:#5F5F5F; font-weight:normal; font-family:Helvetica; font-size:20px; line-height:125%; text-align:Left; letter-spacing:normal;margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;padding-top:0;padding-bottom:0;padding-left:0;padding-right:0;}
+            /* CLIENT-SPECIFIC STYLES */
+            .ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail/Outlook.com to display emails at full width. */
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div{line-height:100%;} /* Force Hotmail/Outlook.com to display line heights normally. */
+            table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} /* Remove spacing between tables in Outlook 2007 and up. */
+            #outlook a{padding:0;} /* Force Outlook 2007 and up to provide a "view in browser" message. */
+            img{-ms-interpolation-mode: bicubic;display:block;outline:none; text-decoration:none;} /* Force IE to smoothly render resized images. */
+            body, table, td, p, a, li, blockquote{-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; font-weight:normal!important;} /* Prevent Windows- and Webkit-based mobile platforms from changing declared text sizes. */
+            .ExternalClass td[class="ecxflexibleContainerBox"] h3 {padding-top: 10px !important;} /* Force hotmail to push 2-grid sub headers down */
+            /* ========== Page Styles ========== */
+            h1{display:block;font-size:26px;font-style:normal;font-weight:normal;line-height:100%;}
+            h2{display:block;font-size:20px;font-style:normal;font-weight:normal;line-height:120%;}
+            h3{display:block;font-size:17px;font-style:normal;font-weight:normal;line-height:110%;}
+            h4{display:block;font-size:18px;font-style:italic;font-weight:normal;line-height:100%;}
+            .flexibleImage{height:auto;}
+            .linkRemoveBorder{border-bottom:0 !important;}
+            table[class=flexibleContainerCellDivider] {padding-bottom:0 !important;padding-top:0 !important;}
+
+            body, #bodyTable{background-color:#E1E1E1;}
+            #emailHeader{background-color:#E1E1E1;}
+            #emailBody{background-color:#FFFFFF;}
+            #emailFooter{background-color:#E1E1E1;}
+            .nestedContainer{background-color:#F8F8F8; border:1px solid #CCCCCC;}
+            .emailButton{background-color:#205478; border-collapse:separate;}
+            .buttonContent{color:#FFFFFF; font-family:Helvetica; font-size:18px; font-weight:bold; line-height:100%; padding:15px; text-align:center;}
+            .buttonContent a{color:#FFFFFF; display:block; text-decoration:none!important; border:0!important;}
+            .emailCalendar{background-color:#FFFFFF; border:1px solid #CCCCCC;}
+            .emailCalendarMonth{background-color:#205478; color:#FFFFFF; font-family:Helvetica, Arial, sans-serif; font-size:16px; font-weight:bold; padding-top:10px; padding-bottom:10px; text-align:center;}
+            .emailCalendarDay{color:#205478; font-family:Helvetica, Arial, sans-serif; font-size:60px; font-weight:bold; line-height:100%; padding-top:20px; padding-bottom:20px; text-align:center;}
+            .imageContentText {margin-top: 10px;line-height:0;}
+            .imageContentText a {line-height:0;}
+            #invisibleIntroduction {display:none !important;} /* Removing the introduction text from the view */
+            span[class=ios-color-hack] a {color:#275100!important;text-decoration:none!important;} /* Remove all link colors in IOS (below are duplicates based on the color preference) */
+            span[class=ios-color-hack2] a {color:#205478!important;text-decoration:none!important;}
+            span[class=ios-color-hack3] a {color:#8B8B8B!important;text-decoration:none!important;}
+            .a[href^="tel"], a[href^="sms"] {text-decoration:none!important;color:#606060!important;pointer-events:none!important;cursor:default!important;}
+            .mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {text-decoration:none!important;color:#606060!important;pointer-events:auto!important;cursor:default!important;}
+            /* MOBILE STYLES */
+            @media only screen and (max-width: 480px){
+              /*////// CLIENT-SPECIFIC STYLES //////*/
+              body{width:100% !important; min-width:100% !important;} /* Force iOS Mail to render the email at full width. */
+              table[id="emailHeader"],
+              table[id="emailBody"],
+              table[id="emailFooter"],
+              table[class="flexibleContainer"],
+              td[class="flexibleContainerCell"] {width:100% !important;}
+              td[class="flexibleContainerBox"], td[class="flexibleContainerBox"] table {display: block;width: 100%;text-align: left;}
+              td[class="imageContent"] img {height:auto !important; width:100% !important; max-width:100% !important; }
+              img[class="flexibleImage"]{height:auto !important; width:100% !important;max-width:100% !important;}
+              img[class="flexibleImageSmall"]{height:auto !important; width:auto !important;}
+              table[class="flexibleContainerBoxNext"]{padding-top: 10px !important;}
+              table[class="emailButton"]{width:100% !important;}
+              td[class="buttonContent"]{padding:0 !important;}
+              td[class="buttonContent"] a{padding:15px !important;}
+            }
+          </style>
+        </head>
+        <body bgcolor="#E1E1E1" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+          <center style="background-color:#E1E1E1;">
+            <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="table-layout: fixed;max-width:100% !important;width: 100% !important;min-width: 100% !important;">
+              <tr>
+                <td align="center" valign="top" id="bodyCell">
+                  <table bgcolor="#E1E1E1" border="0" cellpadding="0" cellspacing="0" width="500" id="emailHeader">
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="10" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td valign="top" width="500" class="flexibleContainerCell">
+                                    <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td align="left" valign="middle" id="invisibleIntroduction" class="flexibleContainerBox" style="display:none !important; mso-hide:all;">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:100%;">
+                                            <tr>
+                                              <td align="left" class="textContent"></td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                        <td align="right" valign="middle" class="flexibleContainerBox">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:100%;">
+                                            <tr>
+                                              <td align="left" class="textContent"></td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <table bgcolor="#FFFFFF"  border="0" cellpadding="0" cellspacing="0" width="600" id="emailBody">
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="color:#FFFFFF;" bgcolor="#e30613">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="4" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td align="center" valign="top" class="textContent"></td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top" style="border-bottom: 1px solid #e1e1e1;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="20" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td align="center" valign="top">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                              <td valign="top" class="textContent">
+                                                <a href="https://hydrex-international.com"><img src="https://hydrex-international.com/assets/img/icon-Hydrex-150px.png" style="margin: auto;"></a>
+                                              </td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="30" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td align="center" valign="top">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                              <td valign="top" class="textContent">
+                                              <h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:16px;text-align:left;"> '.$nb_produits.' '.$message.' </h3>
+                                          
+                                            </td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                <td align="center" valign="top" width="500" class="flexibleContainerCell">
+
+                                <table cellspacing="0" cellpadding="6" border="1" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;width:100%;font-family:Helvetica,Roboto,Arial,sans-serif">
+                                  <thead><tr>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Code article</th>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Désignation</th>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Quantité</th>
+                                  <th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Stock minimum</th>
+                                  </tr></thead>
+                                    <tbody>'.$table_stock.' </tbody>
+                                     
+                                  </table>
+                                </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+ 
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="10" cellspacing="0" width="500" class="flexibleContainer">
+                              <tr><td><hr style="border:2px solid #e30613"></td></tr>
+                                <tr>
+                                  <td valign="top" width="500" class="flexibleContainerCell">
+                                    <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td width="100%" align="center" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;color:#7b7b7f;text-align:center;padding:0 0 0 0">
+                                          Merci pour votre confiance, nous restons à votre écoute pour tout complément d’informations.<br><br>
+                                          <span style="font-weight:bold;color:#e30613">À très bientôt sur Hydrex International !</span><br>
+                                          Votre équipe <a href="https://hydrex-international.com/" rel="noreferrer" target="_blank"> Hydrex International</a>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                    <table border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr style="height: 30px"><td align="center" valign="top"> </td> </tr></tbody></table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                   
+                  </table>
+
+                  <table border="0" cellpadding="0" cellspacing="0" width="600"><tbody><tr style="height: 30px"><td align="center" valign="top"> </td> </tr></tbody></table>
+
+                  <table border="0" cellpadding="0" cellspacing="0" width="600" bgcolor="#e30613" style="color: #fff">
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="20" cellspacing="0" width="500" class="flexibleContainer">
+                          <tr>
+                            <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                              <table border="0" cellpadding="0" cellspacing="0" align="center">
+                                <tbody>
+                                  <tr>
+                                    <span> 37, Rue Jeannette Ponteille, 69550 Amplepuis - France</span>
+                                  </tr>
+                                  <tr>
+                                    <td valign="top">
+                                      <span>Email : <a href="mailto:hydrex@hydrex.fr" target="_blank" style="color: #fff">hydrex@hydrex.fr</a></span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td valign="top">
+                                      <span style="font-weight:normal">Tél :+33 04 74 89 30 88</span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td valign="top">
+                                      <span style="font-weight:normal">Fax :+33 04 74 89 30 65 </span>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="20" cellspacing="0" width="500" class="flexibleContainer">
+                          <tr>
+                           <td></td> <td></td>
+                            <td>
+                              <a href="https://www.facebook.com/hydrex.international" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/facebook.png"></a>
+                            </td>
+                            <td>
+                              <a href="https://www.linkedin.com/company/hydrex-international/?viewAsMember=true" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/linkedin.png"></a></td>
+                            <td>
+                              <a href="https://twitter.com/hydrex" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/twitter.png"><i class="fa fa-twitter"></i></a>
+                            </td>
+                            <td>
+                              <a href="https://www.instagram.com/hydrex.international/" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/instagram.png"><i class="fa fa-instagram"></i></a>
+                            </td>
+                            <td>
+                              <a href="https://www.youtube.com/channel/UC0-RajpSF6kyUUnkoANcH2Q" target="_blank">
+                              <img src="https://hydrex-international.com/assets/img/icons/youtube.png"><i class="fa fa-youtube-play"></i></a>
+                            </td>
+                            <td></td> <td></td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <table bgcolor="#E1E1E1" border="0" cellpadding="0" cellspacing="0" width="500" id="emailFooter">
+                  <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="30" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td valign="top" bgcolor="#E1E1E1">
+
+                                          <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
+                                            <div>Attention ! Ne répondez pas directement à cet email. Pour des raisons techniques, nous ne recevons pas les demandes émises directement en réponse à nos emails.</div>
+                                          </div>
+
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td align="center" valign="top">
+                              <table border="0" cellpadding="0" cellspacing="0" width="500" class="flexibleContainer">
+                                <tr>
+                                  <td align="center" valign="top" width="500" class="flexibleContainerCell">
+                                    <table border="0" cellpadding="30" cellspacing="0" width="100%">
+                                      <tr>
+                                        <td valign="top" bgcolor="#E1E1E1">
+
+                                          <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
+                                            <div>Copyright &#169; 2021 <a href="https://hydrex-international.com" style="color: #676767;text-decoration: none;">contact@hydrex.fr</a>. Tous les droits sont réservés.</div>
+                                          </div>
+
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </center>
+        </body>
+      </html>';
+
+        $subject = $nb_produits." produits en stocks min -  Hydrex International";
+
+        $from = "maildetestmb@gmail.com";
+        $headers  = 'MIME-Version: 1.0' . "\n"; 
+        $headers .= 'From: Hydrex International <'.$from.'>' . "\n"; 
+        $headers .= 'Content-type: text/html; charset=utf-8' ."\n";
+        $headers .='Content-Transfer-Encoding: 8bit'; 
+
+        mail("maildetestmb@gmail.com",$subject,$msg, $headers);
+
+      }
+?>

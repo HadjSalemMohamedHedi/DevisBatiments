@@ -1,0 +1,76 @@
+.company {
+                display: none;
+            }
+            .infos-client {
+                cursor: pointer;
+            }
+            .badge-warning{
+                float: left;
+                position: relative;
+                top: 4px;
+            }
+
+            input[type="checkbox"].iswitch-md {
+                margin-left: 15px;
+            }
+            .title-item{ padding: 15px; }
+            .form-infos {
+                display: -webkit-inline-box;
+                width: 100%;
+                border-bottom: 1px solid #eee;
+                    margin-bottom: 10px;
+            }
+            .form-infos h4 {
+                margin-right: 20px;
+                    font-size: 15px;
+                        color: #2f3338;
+            }
+            .big-title{ color: #e30613;font-weight: 600; }
+            .list_produits{
+                background: #f3f3f3;
+                padding: 15px;
+                color: #000;
+                border-radius: 2px;
+                margin-top: 20px;
+            }
+            .list_produits .form-infos{  border-bottom: 1px solid #b3b3b3; }
+            .list_produits .form-infos h4{ color: #000; }
+            .row_valid {
+                margin-top: 21px;
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+            .row_valid button {
+                outline: none !important;
+                border: none !important;
+            }
+            .form-total b{ 
+                color: #000000;
+                font-size: 18px;
+                font-weight: 600;
+            }
+            .form-total h4{ 
+               color: #e30613;
+               font-size: 18px;
+               font-weight: 600;
+           }
+           .form-total {
+                text-align: right;
+                margin-top: 30px;
+            }
+            .cmd-success {
+                background: #0e5ba7;
+                color: #fff;
+                padding: 8px 20px;
+                position: relative;
+                top: 6px;
+                right: 10px;
+                border-radius: 2px;
+            }
+            .cmd-new{
+                color: #fff;
+                padding: 8px 20px;
+                border-radius: 2px;
+                float: left;
+            }
+            .top-title{  min-height: 80px; }

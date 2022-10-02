@@ -1,0 +1,228 @@
+[25-Apr-2020 11:16:15 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[25-Apr-2020 11:26:11 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[25-Apr-2020 12:02:38 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[25-Apr-2020 15:09:03 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[25-Apr-2020 15:21:17 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[27-Apr-2020 12:03:48 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[27-Apr-2020 12:21:48 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[27-Apr-2020 12:52:41 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[27-Apr-2020 12:55:19 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[06-May-2020 11:56:21 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[06-May-2020 11:56:30 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[07-May-2020 08:17:54 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[07-May-2020 08:17:56 UTC] PHP Warning:  A non-numeric value encountered in /home4/hydrexin/public_html/back-hydrex/includes/change-statut-demandes.php on line 21
+[07-May-2020 08:17:56 UTC] PHP Warning:  A non-numeric value encountered in /home4/hydrexin/public_html/back-hydrex/includes/change-statut-demandes.php on line 21
+[07-May-2020 08:17:56 UTC] PHP Warning:  A non-numeric value encountered in /home4/hydrexin/public_html/back-hydrex/includes/change-statut-demandes.php on line 21
+[07-May-2020 08:17:56 UTC] PHP Warning:  A non-numeric value encountered in /home4/hydrexin/public_html/back-hydrex/includes/change-statut-demandes.php on line 21
+[07-May-2020 08:17:56 UTC] PHP Warning:  A non-numeric value encountered in /home4/hydrexin/public_html/back-hydrex/includes/change-statut-demandes.php on line 23
+[07-May-2020 08:31:41 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[07-May-2020 08:42:15 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[07-May-2020 08:46:28 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[07-May-2020 08:48:34 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[07-May-2020 08:58:44 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; DB has a deprecated constructor in /home4/hydrexin/public_html/back-hydrex/includes/class.database.php on line 2
+[15-Feb-2021 09:47:43 UTC] PHP Parse error:  syntax error, unexpected '{' in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 59
+[15-Feb-2021 09:52:24 UTC] PHP Fatal error:  Call to undefined function send_mail_to_admin() in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 34
+[15-Feb-2021 15:22:34 UTC] PHP Parse error:  syntax error, unexpected ')', expecting variable (T_VARIABLE) in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 42
+[15-Feb-2021 15:22:53 UTC] PHP Parse error:  syntax error, unexpected ')', expecting variable (T_VARIABLE) in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 42
+[15-Feb-2021 15:23:14 UTC] PHP Parse error:  syntax error, unexpected ')', expecting variable (T_VARIABLE) in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 42
+[15-Feb-2021 15:24:20 UTC] PHP Warning:  Missing argument 14 for send_mail_to_client(), called in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 36 and defined in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 42
+[15-Feb-2021 15:24:20 UTC] PHP Notice:  Undefined variable: phone in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 311
+[15-Feb-2021 15:24:20 UTC] PHP Notice:  Undefined variable: phone in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 311
+[15-Feb-2021 15:27:18 UTC] PHP Warning:  Missing argument 14 for send_mail_to_client(), called in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 36 and defined in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 42
+[15-Feb-2021 15:27:18 UTC] PHP Notice:  Undefined variable: phone in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 340
+[15-Feb-2021 15:27:18 UTC] PHP Notice:  Undefined variable: phone in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 340
+[15-Feb-2021 15:32:59 UTC] PHP Warning:  Missing argument 14 for send_mail_to_client(), called in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 36 and defined in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 42
+[15-Feb-2021 15:32:59 UTC] PHP Notice:  Undefined variable: phone in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 340
+[15-Feb-2021 15:32:59 UTC] PHP Notice:  Undefined variable: phone in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 340
+[22-Feb-2021 13:48:05 UTC] PHP Fatal error:  Call to undefined function send_mail_to_admin() in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 24
+[25-Feb-2021 08:00:10 UTC] PHP Notice:  Undefined variable: email in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 520
+[25-Feb-2021 08:02:01 UTC] PHP Notice:  Undefined variable: msg2 in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 520
+[25-Feb-2021 08:15:55 UTC] PHP Notice:  Undefined variable: table_stock in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 50
+[25-Feb-2021 08:15:55 UTC] PHP Notice:  Undefined variable: nom in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 751
+[25-Feb-2021 08:15:55 UTC] PHP Notice:  Undefined variable: adresse in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 751
+[25-Feb-2021 08:15:55 UTC] PHP Notice:  Undefined variable: adresse in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 751
+[25-Feb-2021 08:15:55 UTC] PHP Notice:  Undefined variable: pays in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 751
+[25-Feb-2021 08:15:55 UTC] PHP Notice:  Undefined variable: code_postal in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 751
+[25-Feb-2021 08:15:55 UTC] PHP Notice:  Undefined variable: phone in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 752
+[25-Feb-2021 08:15:55 UTC] PHP Notice:  Undefined variable: phone in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 752
+[25-Feb-2021 08:15:55 UTC] PHP Notice:  Undefined variable: email in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 752
+[25-Feb-2021 08:15:55 UTC] PHP Notice:  Undefined variable: email in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 752
+[25-Feb-2021 08:15:55 UTC] PHP Notice:  Undefined variable: msg in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 933
+[25-Feb-2021 08:43:17 UTC] PHP Notice:  Undefined variable: table_stock in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 50
+[25-Feb-2021 08:43:17 UTC] PHP Notice:  Undefined variable: nom in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 751
+[25-Feb-2021 08:43:17 UTC] PHP Notice:  Undefined variable: adresse in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 751
+[25-Feb-2021 08:43:17 UTC] PHP Notice:  Undefined variable: adresse in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 751
+[25-Feb-2021 08:43:17 UTC] PHP Notice:  Undefined variable: pays in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 751
+[25-Feb-2021 08:43:17 UTC] PHP Notice:  Undefined variable: code_postal in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 751
+[25-Feb-2021 08:43:17 UTC] PHP Notice:  Undefined variable: phone in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 752
+[25-Feb-2021 08:43:17 UTC] PHP Notice:  Undefined variable: phone in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 752
+[25-Feb-2021 08:43:17 UTC] PHP Notice:  Undefined variable: email in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 752
+[25-Feb-2021 08:43:17 UTC] PHP Notice:  Undefined variable: email in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 752
+[25-Feb-2021 08:43:17 UTC] PHP Notice:  Undefined variable: msg in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 933
+[25-Feb-2021 08:44:09 UTC] PHP Parse error:  syntax error, unexpected ''<!DOCTYPE html PUBLIC "-//W3C' (T_ENCAPSED_AND_WHITESPACE) in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 70
+[25-Feb-2021 08:44:18 UTC] PHP Notice:  Undefined variable: nom in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 752
+[25-Feb-2021 08:44:18 UTC] PHP Notice:  Undefined variable: adresse in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 752
+[25-Feb-2021 08:44:18 UTC] PHP Notice:  Undefined variable: adresse in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 752
+[25-Feb-2021 08:44:18 UTC] PHP Notice:  Undefined variable: pays in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 752
+[25-Feb-2021 08:44:18 UTC] PHP Notice:  Undefined variable: code_postal in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 752
+[25-Feb-2021 08:44:18 UTC] PHP Notice:  Undefined variable: phone in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 753
+[25-Feb-2021 08:44:18 UTC] PHP Notice:  Undefined variable: phone in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 753
+[25-Feb-2021 08:44:18 UTC] PHP Notice:  Undefined variable: email in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 753
+[25-Feb-2021 08:44:18 UTC] PHP Notice:  Undefined variable: email in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 753
+[25-Feb-2021 08:44:18 UTC] PHP Notice:  Undefined variable: msg in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 934
+[25-Feb-2021 08:44:43 UTC] PHP Notice:  Undefined variable: msg in /home4/hydrexin/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 906
+[07-Apr-2021 08:38:25 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[07-Apr-2021 08:38:25 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 40
+[07-Apr-2021 09:09:19 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[07-Apr-2021 09:09:19 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[07-Apr-2021 09:12:28 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[07-Apr-2021 09:12:28 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 41
+[07-Apr-2021 09:13:11 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[07-Apr-2021 09:13:11 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 41
+[07-Apr-2021 09:14:50 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[07-Apr-2021 09:14:50 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 41
+[07-Apr-2021 13:24:08 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[07-Apr-2021 13:24:08 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 41
+[13-Apr-2021 11:50:45 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[13-Apr-2021 11:50:45 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[13-Apr-2021 11:51:57 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[13-Apr-2021 11:51:57 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[13-Apr-2021 12:20:26 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[13-Apr-2021 12:20:26 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[14-Apr-2021 09:56:55 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[14-Apr-2021 09:56:55 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[30-Apr-2021 09:43:27 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[30-Apr-2021 09:43:27 UTC] PHP Warning:  A non-numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 38
+[30-Apr-2021 09:43:27 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[17-May-2021 14:52:58 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[17-May-2021 14:52:58 UTC] PHP Warning:  A non-numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 38
+[17-May-2021 14:52:58 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[17-May-2021 16:46:10 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[17-May-2021 16:46:10 UTC] PHP Warning:  A non-numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 38
+[17-May-2021 16:46:10 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:01:42 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[18-May-2021 14:01:42 UTC] PHP Warning:  A non-numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 38
+[18-May-2021 14:01:42 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:01:42 UTC] PHP Warning:  A non-numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 306
+[18-May-2021 14:01:42 UTC] PHP Warning:  number_format() expects parameter 1 to be float, string given in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 311
+[18-May-2021 14:02:09 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[18-May-2021 14:02:09 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:02:09 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 306
+[18-May-2021 14:02:09 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 311
+[18-May-2021 14:02:53 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[18-May-2021 14:02:53 UTC] PHP Warning:  A non-numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 38
+[18-May-2021 14:02:53 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:02:53 UTC] PHP Warning:  A non-numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 306
+[18-May-2021 14:02:53 UTC] PHP Warning:  number_format() expects parameter 1 to be float, string given in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 311
+[18-May-2021 14:02:56 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[18-May-2021 14:02:56 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:02:56 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 306
+[18-May-2021 14:02:56 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 311
+[18-May-2021 14:08:19 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[18-May-2021 14:08:19 UTC] PHP Warning:  A non-numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 38
+[18-May-2021 14:08:19 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:08:19 UTC] PHP Warning:  number_format() expects parameter 1 to be float, string given in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 307
+[18-May-2021 14:08:19 UTC] PHP Warning:  number_format() expects parameter 1 to be float, string given in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 318
+[18-May-2021 14:11:02 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[18-May-2021 14:11:02 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:11:02 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 307
+[18-May-2021 14:11:02 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 318
+[18-May-2021 14:13:13 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[18-May-2021 14:13:13 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:13:13 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 307
+[18-May-2021 14:13:13 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 318
+[18-May-2021 14:15:33 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[18-May-2021 14:15:33 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:15:33 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 307
+[18-May-2021 14:15:33 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 318
+[18-May-2021 14:25:13 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[18-May-2021 14:25:13 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:25:13 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 307
+[18-May-2021 14:25:13 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 323
+[18-May-2021 14:25:13 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 334
+[18-May-2021 14:30:02 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[18-May-2021 14:30:02 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:30:02 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 307
+[18-May-2021 14:30:02 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 323
+[18-May-2021 14:30:02 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 334
+[18-May-2021 14:32:26 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[18-May-2021 14:32:26 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:32:26 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 307
+[18-May-2021 14:32:26 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 323
+[18-May-2021 14:32:26 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 334
+[18-May-2021 14:45:32 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[18-May-2021 14:45:32 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:45:32 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 307
+[18-May-2021 14:45:32 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 323
+[18-May-2021 14:45:32 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 334
+[18-May-2021 14:52:05 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[18-May-2021 14:52:05 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[18-May-2021 14:52:05 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 307
+[18-May-2021 14:52:05 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 323
+[18-May-2021 14:52:05 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 334
+[19-May-2021 11:12:51 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 12
+[19-May-2021 11:12:51 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 43
+[19-May-2021 11:12:51 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 307
+[19-May-2021 11:12:51 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 323
+[19-May-2021 11:12:51 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/beta-hydrex/back-hydrex/includes/change-statut-commande.php on line 334
+[25-May-2021 15:52:34 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 12
+[25-May-2021 15:52:34 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 43
+[25-May-2021 15:52:34 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 307
+[25-May-2021 15:52:34 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 323
+[25-May-2021 15:52:34 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 334
+[25-May-2021 15:54:32 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 12
+[25-May-2021 15:54:32 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 43
+[25-May-2021 15:54:32 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 307
+[25-May-2021 15:54:32 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 323
+[25-May-2021 15:54:32 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 334
+[26-May-2021 07:33:03 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 12
+[26-May-2021 07:33:03 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 43
+[26-May-2021 07:33:03 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 307
+[26-May-2021 07:33:03 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 323
+[26-May-2021 07:33:03 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 334
+[26-May-2021 07:40:23 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 12
+[26-May-2021 07:40:23 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 43
+[26-May-2021 07:40:23 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 307
+[26-May-2021 07:40:23 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 323
+[26-May-2021 07:40:23 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 334
+[13-Jul-2021 14:11:59 UTC] PHP Notice:  Undefined index: statut in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-object.php on line 22
+[25-Aug-2021 09:54:59 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 12
+[25-Aug-2021 09:54:59 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 43
+[25-Aug-2021 09:54:59 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 307
+[25-Aug-2021 09:54:59 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 323
+[25-Aug-2021 09:54:59 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 334
+[25-Aug-2021 09:55:02 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 12
+[25-Aug-2021 09:55:02 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 43
+[25-Aug-2021 09:55:02 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 307
+[25-Aug-2021 09:55:02 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 323
+[25-Aug-2021 09:55:02 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 334
+[22-Sep-2021 14:42:05 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 12
+[22-Sep-2021 14:42:05 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 43
+[22-Sep-2021 14:42:05 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 307
+[22-Sep-2021 14:42:05 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 323
+[22-Sep-2021 14:42:05 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 334
+[16-Nov-2021 13:42:04 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 12
+[16-Nov-2021 13:42:04 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 43
+[16-Nov-2021 13:42:04 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 307
+[16-Nov-2021 13:42:04 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 323
+[16-Nov-2021 13:42:04 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 334
+[16-Nov-2021 13:42:05 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 12
+[16-Nov-2021 13:42:05 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 43
+[16-Nov-2021 13:42:05 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 307
+[16-Nov-2021 13:42:05 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 323
+[16-Nov-2021 13:42:05 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 334
+[16-Nov-2021 13:50:37 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 12
+[16-Nov-2021 13:50:37 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 43
+[16-Nov-2021 13:50:37 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 307
+[16-Nov-2021 13:50:37 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 323
+[16-Nov-2021 13:50:37 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 334
+[16-Nov-2021 13:50:38 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 12
+[16-Nov-2021 13:50:38 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 43
+[16-Nov-2021 13:50:38 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 307
+[16-Nov-2021 13:50:38 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 323
+[16-Nov-2021 13:50:38 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 334
+[22-Apr-2022 10:36:07 UTC] PHP Notice:  Undefined variable: table_pack in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 12
+[22-Apr-2022 10:36:07 UTC] PHP Notice:  Undefined index: total_final in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 43
+[22-Apr-2022 10:36:07 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 307
+[22-Apr-2022 10:36:07 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 323
+[22-Apr-2022 10:36:07 UTC] PHP Notice:  A non well formed numeric value encountered in /home/lor0jslpljrs/public_html/KcaBoeN-xerdyh/back-hydrex/includes/change-statut-commande.php on line 334
